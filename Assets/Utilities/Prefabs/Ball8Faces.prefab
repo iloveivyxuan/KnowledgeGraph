@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4613352732459234}
   - component: {fileID: 33517907053130526}
   - component: {fileID: 23332239266575064}
+  - component: {fileID: 135484221750694858}
   m_Layer: 0
   m_Name: Ball8Faces
   m_TagString: Untagged
@@ -82,3 +83,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692076751715830}
   m_Mesh: {fileID: 4300000, guid: 4dc4f33e5495c404997803abe92d17a1, type: 3}
+--- !u!135 &135484221750694858
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1692076751715830}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}

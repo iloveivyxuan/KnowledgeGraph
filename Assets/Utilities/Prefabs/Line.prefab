@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4604306254664578}
   - component: {fileID: 120831568703431362}
-  - component: {fileID: 114506324414971566}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -41,19 +40,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114506324414971566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1777756638268004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PivotAxis: 0
-  TargetTransform: {fileID: 0}
 --- !u!120 &120831568703431362
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -89,11 +75,11 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -16.431105, y: -25.703945, z: -8.514088}
-  - {x: -13.857244, y: -7.0911264, z: 5.0921087}
+  - {x: 14.677733, y: -4.208098, z: 40}
+  - {x: -6.02174, y: 4.2489924, z: 40}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.005
+    widthMultiplier: 0.001
     widthCurve:
       serializedVersion: 2
       m_Curve:
