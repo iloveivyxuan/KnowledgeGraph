@@ -133,16 +133,13 @@ namespace HoloToolkit.Unity.SpatialMapping
 
         public virtual void OnInputClicked(InputClickedEventData eventData)
         {
-            IsBeingPlaced = !IsBeingPlaced;
-            HandlePlacement();
-            eventData.Use();
-            //if (MoveButton.GetComponent<MoveButton>().onMoveState)
-            //{
-            //    // On each tap gesture, toggle whether the user is in placing mode.
-            //    IsBeingPlaced = !IsBeingPlaced;
-            //    HandlePlacement();
-            //    eventData.Use();
-            //}
+            if (MoveButton.GetComponent<MoveButton>().onMoveState)
+            {
+                // On each tap gesture, toggle whether the user is in placing mode.
+                IsBeingPlaced = !IsBeingPlaced;
+                HandlePlacement();
+                eventData.Use();
+            }
         }
 
         private void HandlePlacement()
@@ -154,7 +151,7 @@ namespace HoloToolkit.Unity.SpatialMapping
             else
             {
                 StopPlacing();
-                //MoveButton.GetComponent<MoveButton>().onMoveState = false;
+                MoveButton.GetComponent<MoveButton>().onMoveState = false;
             }
         }
         private void StartPlacing()
