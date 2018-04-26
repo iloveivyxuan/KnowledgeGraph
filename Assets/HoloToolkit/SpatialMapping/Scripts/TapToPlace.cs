@@ -41,6 +41,8 @@ namespace HoloToolkit.Unity.SpatialMapping
         [Tooltip("Should the center of the Collider be used instead of the gameObjects world transform.")]
         public bool UseColliderCenter;
 
+        public GameObject MoveButton;
+
         private Interpolator interpolator;
 
         /// <summary>
@@ -131,10 +133,16 @@ namespace HoloToolkit.Unity.SpatialMapping
 
         public virtual void OnInputClicked(InputClickedEventData eventData)
         {
-            // On each tap gesture, toggle whether the user is in placing mode.
             IsBeingPlaced = !IsBeingPlaced;
             HandlePlacement();
             eventData.Use();
+            //if (MoveButton.GetComponent<MoveButton>().onMoveState)
+            //{
+            //    // On each tap gesture, toggle whether the user is in placing mode.
+            //    IsBeingPlaced = !IsBeingPlaced;
+            //    HandlePlacement();
+            //    eventData.Use();
+            //}
         }
 
         private void HandlePlacement()
@@ -146,6 +154,7 @@ namespace HoloToolkit.Unity.SpatialMapping
             else
             {
                 StopPlacing();
+                //MoveButton.GetComponent<MoveButton>().onMoveState = false;
             }
         }
         private void StartPlacing()
