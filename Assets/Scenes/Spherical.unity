@@ -122,10 +122,10 @@ GameObject:
   m_Component:
   - component: {fileID: 53128256}
   - component: {fileID: 53128257}
-  - component: {fileID: 53128258}
-  - component: {fileID: 53128261}
   - component: {fileID: 53128260}
   - component: {fileID: 53128259}
+  - component: {fileID: 53128262}
+  - component: {fileID: 53128263}
   m_Layer: 0
   m_Name: Infograph
   m_TagString: Untagged
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationVelocity: {x: 0.1, y: 0.2, z: 0.3}
---- !u!114 &53128258
+--- !u!114 &53128259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -166,23 +166,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 53128255}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cae8f3c88e9704a4393cb8d904b62372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &53128259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 53128255}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12f64a7e6f461aa409b8322f413f96b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultGazeDistance: 2
   PlaceParentOnTap: 0
   ParentGameObjectToPlace: {fileID: 0}
+  IsPlacingEnabled: 0
   IsBeingPlaced: 0
   AllowMeshVisualizationControl: 1
   UseColliderCenter: 0
@@ -207,20 +197,35 @@ MonoBehaviour:
   SmoothPositionLerpRatio: 0.5
   SmoothRotationLerpRatio: 0.5
   SmoothScaleLerpRatio: 0.5
---- !u!64 &53128261
-MeshCollider:
+--- !u!114 &53128262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 53128255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HostTransform: {fileID: 0}
+  DistanceScale: 2
+  RotationMode: 0
+  PositionLerpSpeed: 0.2
+  RotationLerpSpeed: 0.2
+  IsDraggingEnabled: 0
+--- !u!135 &53128263
+SphereCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 53128255}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 0}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 22
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &361487640 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1929752499444682, guid: 574cd1f7d793eed4ca9e45fe01173139,
@@ -238,7 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InfoGraph: {fileID: 53128255}
-  onMoveState: 0
 --- !u!4 &706949464 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013298573622, guid: 2ed75ffdf9031c94e8bce4b3d17b9928,
@@ -861,7 +865,7 @@ Prefab:
     - target: {fileID: 102328161489387186, guid: 574cd1f7d793eed4ca9e45fe01173139,
         type: 2}
       propertyPath: m_Text
-      value: Adjust
+      value: Drag
       objectReference: {fileID: 0}
     - target: {fileID: 102011358872580696, guid: 574cd1f7d793eed4ca9e45fe01173139,
         type: 2}
@@ -885,6 +889,10 @@ Prefab:
         type: 2}
       propertyPath: ButtonState
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055465189766046, guid: 574cd1f7d793eed4ca9e45fe01173139, type: 2}
+      propertyPath: m_Name
+      value: DragButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574cd1f7d793eed4ca9e45fe01173139, type: 2}
@@ -954,6 +962,23 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1546474524 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1055465189766046, guid: 574cd1f7d793eed4ca9e45fe01173139,
+    type: 2}
+  m_PrefabInternal: {fileID: 1365997452}
+--- !u!114 &1546474534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1546474524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97c1938ceef50d48b26de0b2576b682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InfoGraph: {fileID: 53128255}
 --- !u!1 &1801598357
 GameObject:
   m_ObjectHideFlags: 0

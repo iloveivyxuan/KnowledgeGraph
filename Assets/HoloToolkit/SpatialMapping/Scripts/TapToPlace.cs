@@ -32,6 +32,8 @@ namespace HoloToolkit.Unity.SpatialMapping
         /// Setting this to true will enable the user to move and place the object in the scene.
         /// Useful when you want to place an object immediately.
         /// </summary>
+        public bool IsPlacingEnabled;
+
         [Tooltip("Setting this to true will enable the user to move and place the object in the scene without needing to tap on the object. Useful when you want to place an object immediately.")]
         public bool IsBeingPlaced;
 
@@ -55,6 +57,8 @@ namespace HoloToolkit.Unity.SpatialMapping
 
         protected virtual void Start()
         {
+            IsPlacingEnabled = false;
+
             if (PlaceParentOnTap)
             {
                 ParentGameObjectToPlace = GetParentToPlace();
@@ -128,12 +132,12 @@ namespace HoloToolkit.Unity.SpatialMapping
             interpolator.SetTargetPosition(placementPosition);
 
             // Rotate this object to face the user.
-            interpolator.SetTargetRotation(Quaternion.Euler(0, cameraTransform.localEulerAngles.y, 0));
+            // interpolator.SetTargetRotation(Quaternion.Euler(0, cameraTransform.localEulerAngles.y, 0));
         }
 
         public virtual void OnInputClicked(InputClickedEventData eventData)
         {
-            if (MoveButton.GetComponent<MoveButton>().onMoveState)
+            if (IsPlacingEnabled == true)
             {
                 // On each tap gesture, toggle whether the user is in placing mode.
                 IsBeingPlaced = !IsBeingPlaced;
@@ -151,7 +155,7 @@ namespace HoloToolkit.Unity.SpatialMapping
             else
             {
                 StopPlacing();
-                MoveButton.GetComponent<MoveButton>().onMoveState = false;
+                IsPlacingEnabled = false;
             }
         }
         private void StartPlacing()
