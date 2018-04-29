@@ -15,7 +15,7 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
         if (onLearn)
         {
             iTween.ScaleTo(Buttons, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
-            iTween.MoveTo(InfoGraph, iTween.Hash("x", 0, "y", 0, "z", 0.85, "easeType", "easeInOutExpo", "delay", .1));
+            iTween.MoveTo(InfoGraph, iTween.Hash("position", Menu.transform.position - new Vector3(0, 0, 1.25f), "easeType", "easeInOutExpo", "delay", .1));
         }
         else
         {
