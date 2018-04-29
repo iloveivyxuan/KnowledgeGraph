@@ -2,19 +2,15 @@
 using UnityEngine;
 
 public class MenuCourseButton : MonoBehaviour, IInputClickHandler {
+    public GameObject Menu;
     public GameObject Buttons;
     public GameObject Graph;
     public GameObject CourseCards;
-    private bool onMenu;
-
-    void Start()
-    {
-        onMenu = true;
-    }
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (onMenu)
+        Menu.GetComponent<Menu>().onMenu = !Menu.GetComponent<Menu>().onMenu;
+        if (!Menu.GetComponent<Menu>().onMenu)
         {
             MenuOpen();
             CourseCards.SetActive(true);
@@ -25,7 +21,6 @@ public class MenuCourseButton : MonoBehaviour, IInputClickHandler {
         {
             MenuClose();
         }
-        onMenu = !onMenu;
     }
 
     private void MenuOpen()
