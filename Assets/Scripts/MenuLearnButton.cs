@@ -1,4 +1,5 @@
 ﻿using HoloToolkit.Unity.InputModule;
+using HoloToolkit.Unity;
 using UnityEngine;
 
 public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
@@ -6,6 +7,7 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
     public GameObject Buttons;
     public GameObject InfoGraph;
     public GameObject ToolBar;
+    public GameObject InfoGraphLarge;
     private bool onLearn;
 
     public void OnInputClicked(InputClickedEventData eventData)
@@ -15,7 +17,8 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
         if (onLearn)
         {
             iTween.ScaleTo(Buttons, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
-            iTween.MoveTo(InfoGraph, iTween.Hash("position", Menu.transform.position - new Vector3(0, 0, 1.25f), "easeType", "easeInOutExpo", "delay", .1));
+            iTween.MoveTo(InfoGraph, iTween.Hash("position", Menu.transform.position / 2, "easeType", "easeInOutExpo", "delay", .1));
+            Menu.GetComponent<Tagalong>().enabled = false;
         }
         else
         {
