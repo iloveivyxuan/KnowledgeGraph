@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
-public class AutomateButton : MonoBehaviour {
+public class AutomateButton : MonoBehaviour, IInputClickHandler {
+    public GameObject InfoGraph;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        InfoGraph.GetComponent<AutoRotation>().isRotating = !InfoGraph.GetComponent<AutoRotation>().isRotating;
+    }
 }
