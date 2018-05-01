@@ -1,10 +1,10 @@
 ﻿using HoloToolkit.Unity.InputModule;
+using HoloToolkit.Unity.InputModule.Utilities.Interactions;
 using HoloToolkit.Unity;
 using UnityEngine;
 
 public class MenuButton : MonoBehaviour, IInputClickHandler {
     public GameObject Menu;
-    public GameObject MenuPosition;
     public GameObject Buttons;
     public GameObject ToolBar;
     public GameObject InfoGraph;
@@ -17,5 +17,7 @@ public class MenuButton : MonoBehaviour, IInputClickHandler {
         iTween.MoveTo(Buttons, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
         ToolBar.SetActive(false);
         iTween.MoveTo(InfoGraph, iTween.Hash("position", new Vector3(0, 0.16f, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
+        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.005, "y", 0.005, "z", 0.005, "easeType", "easeInOutExpo", "delay", 0.2));
+        InfoGraph.GetComponent<TwoHandManipulatable>().enabled = false;
     }
 }
