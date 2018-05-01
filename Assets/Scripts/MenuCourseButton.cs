@@ -7,18 +7,27 @@ public class MenuCourseButton : MonoBehaviour, IInputClickHandler {
     public GameObject Graph;
     public GameObject CourseCards;
 
+    void Update()
+    {
+        if (!Menu.GetComponent<Menu>().onMenu)
+        {
+            Vector3 updateRotation = new Vector3(0, -0.05f, 0);
+            CourseCards.transform.localRotation *= Quaternion.Euler(updateRotation);
+        }
+    }
+
     public void OnInputClicked(InputClickedEventData eventData)
     {
         Menu.GetComponent<Menu>().onMenu = !Menu.GetComponent<Menu>().onMenu;
         if (!Menu.GetComponent<Menu>().onMenu)
         {
             MenuOpen();
-            CourseCards.SetActive(true);
             CourseCards.GetComponent<CourseCardsAnimation>().AppearCards();
             CourseCards.GetComponent<CourseCardsAnimation>().SpreadCards();
         }
         else
         {
+            CourseCards.GetComponent<CourseCardsAnimation>().PutTogether();
             MenuClose();
         }
     }
