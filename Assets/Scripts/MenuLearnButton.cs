@@ -8,6 +8,7 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
     public GameObject Buttons;
     public GameObject InfoGraph;
     public GameObject ToolBar;
+    public GameObject ToolBarWrapper;
     private bool onLearn;
 
     public void OnInputClicked(InputClickedEventData eventData)
@@ -21,7 +22,9 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
             iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.008, "y", 0.008, "z", 0.008, "easeType", "easeInOutExpo", "delay", 0.1));
             Menu.GetComponent<Tagalong>().enabled = false;
             InfoGraph.GetComponent<TwoHandManipulatable>().enabled = true;
+            ToolBarWrapper.SetActive(true);
+            ToolBar.GetComponent<ToolBarSetting>().GetChildren();
+            ToolBar.GetComponent<ToolBarSetting>().SetToolsPosition();
         }
-        ToolBar.SetActive(onLearn);
     }
 }
