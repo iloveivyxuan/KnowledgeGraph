@@ -45,6 +45,8 @@ namespace HoloToolkit.Unity.SpatialMapping
 
         public GameObject MoveButton;
 
+        public GameObject SpatialMapping;
+
         private Interpolator interpolator;
 
         /// <summary>
@@ -140,6 +142,7 @@ namespace HoloToolkit.Unity.SpatialMapping
             if (IsPlacingEnabled == true)
             {
                 // On each tap gesture, toggle whether the user is in placing mode.
+                SpatialMapping.SetActive(true);
                 IsBeingPlaced = !IsBeingPlaced;
                 HandlePlacement();
                 eventData.Use();
@@ -156,6 +159,7 @@ namespace HoloToolkit.Unity.SpatialMapping
             {
                 StopPlacing();
                 IsPlacingEnabled = false;
+                SpatialMapping.SetActive(false);
             }
         }
         private void StartPlacing()
