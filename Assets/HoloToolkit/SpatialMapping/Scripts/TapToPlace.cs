@@ -137,16 +137,19 @@ namespace HoloToolkit.Unity.SpatialMapping
             // interpolator.SetTargetRotation(Quaternion.Euler(0, cameraTransform.localEulerAngles.y, 0));
         }
 
+        public void PlaceGameobject()
+        {
+            SpatialMapping.SetActive(true);
+            IsBeingPlaced = !IsBeingPlaced;
+            HandlePlacement();
+        }
+
         public virtual void OnInputClicked(InputClickedEventData eventData)
         {
-            if (IsPlacingEnabled == true)
-            {
-                // On each tap gesture, toggle whether the user is in placing mode.
-                SpatialMapping.SetActive(true);
-                IsBeingPlaced = !IsBeingPlaced;
-                HandlePlacement();
-                eventData.Use();
-            }
+            SpatialMapping.SetActive(true);
+            IsBeingPlaced = !IsBeingPlaced;
+            HandlePlacement();
+            eventData.Use();
         }
 
         private void HandlePlacement()
@@ -158,8 +161,7 @@ namespace HoloToolkit.Unity.SpatialMapping
             else
             {
                 StopPlacing();
-                IsPlacingEnabled = false;
-                SpatialMapping.SetActive(false);
+                 SpatialMapping.SetActive(false);
             }
         }
         private void StartPlacing()
