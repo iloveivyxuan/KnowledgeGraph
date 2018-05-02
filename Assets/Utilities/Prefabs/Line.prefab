@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4604306254664578}
   - component: {fileID: 120831568703431362}
+  - component: {fileID: 114854415173014174}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -40,6 +41,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114854415173014174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1777756638268004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482bee67cf7619e419f66a4b1dd7405c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SphericalStartPosition: {x: 0, y: 0, z: 0}
+  SphericalEndPosition: {x: 0, y: 0, z: 0}
+  HierarchyStartPosition: {x: 0, y: 0, z: 0}
+  HierarchyEndPosition: {x: 0, y: 0, z: 0}
 --- !u!120 &120831568703431362
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -75,8 +91,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 14.677733, y: -4.208098, z: 40}
-  - {x: -6.02174, y: 4.2489924, z: 40}
+  - {x: 12.824946, y: -12.756826, z: 7.812185}
+  - {x: 13.468897, y: 8.521565, z: 13.736626}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.001

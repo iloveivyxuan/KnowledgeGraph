@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135484221750694858}
   - component: {fileID: 114008992089443798}
   - component: {fileID: 114702751588408216}
+  - component: {fileID: 114522710959914800}
   m_Layer: 0
   m_Name: Ball8Faces
   m_TagString: Untagged
@@ -98,6 +99,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Delegates: []
   delegates: []
+--- !u!114 &114522710959914800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1692076751715830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce0f25d80dcc504c8fb890d0e4bda36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 
+  Label: 
+  Type: 
+  SphericalPosition: {x: 0, y: 0, z: 0}
+  HierarchyPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114702751588408216
 MonoBehaviour:
   m_ObjectHideFlags: 1

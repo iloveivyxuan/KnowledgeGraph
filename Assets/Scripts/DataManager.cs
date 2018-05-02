@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public class DataManager : MonoBehaviour
 {
-
     public GameObject infoGraph;
     public GameObject pointToInstantiate;
     public GameObject edgeToInstantiate;
-    public string gameDataFileName;
+
+    public string SphericalDataFileName;
+    public string HierarchyDataFileName;
+
+    public List<GameObject> Points;
 
     [Header("Set Graph Initiation status")]
     [SerializeField]
@@ -15,62 +19,89 @@ public class DataManager : MonoBehaviour
     public Vector3 GraphPosition;
     public Vector3 GraphRotation;
 
-    private JSONObject pointPositions;
+    private JSONObject sphericalData;
+    private JSONObject hierarchyData;
+
+    private JSONObject sphericalPointPositions;
+    private JSONObject hierarchyPointPositions;
+
+    public void GetJsonData()
+    {
+        string sphericalFilePath = Path.Combine(Application.streamingAssetsPath, SphericalDataFileName);
+        string hierarchyFilePath = Path.Combine(Application.streamingAssetsPath, HierarchyDataFileName);
+        string sphericalDataAsString = File.ReadAllText(sphericalFilePath);
+        string hierarchyDataAsString = File.ReadAllText(hierarchyFilePath);
+        sphericalData = new JSONObject(sphericalDataAsString);
+        hierarchyData = new JSONObject(hierarchyDataAsString);
+    }
+
+    public void CreatePoint(JSONObject sphericalNode, JSONObject hierarchyNode)
+    {
+        InfoPoint sphericalInfoPoint = InfoPoint.CreateFromJSON(sphericalNode.Print());
+        InfoPoint hierarchyInfoPoint = InfoPoint.CreateFromJSON(hierarchyNode.Print());
+        GameObject pointObject = Instantiate(pointToInstantiate, sphericalInfoPoint.position, Quaternion.identity);
+        Points.Add(pointObject);
+        pointObject.transform.parent = infoGraph.transform;
+
+        pointObject.GetComponent<Point>().Id = sphericalInfoPoint.id;
+        pointObject.GetComponent<Point>().Label = sphericalInfoPoint.label;
+        pointObject.GetComponent<Point>().Type = sphericalInfoPoint.type;
+        pointObject.GetComponent<Point>().SphericalPosition = sphericalInfoPoint.position;
+        pointObject.GetComponent<Point>().HierarchyPosition = hierarchyInfoPoint.position;
+        sphericalPointPositions[sphericalInfoPoint.id] = sphericalNode["position"];
+        hierarchyPointPositions[hierarchyInfoPoint.id] = hierarchyNode["position"];
+    }
+
+    public void CreateLine(JSONObject sphericalEdge, JSONObject hierarchyEdge)
+    {
+        InfoEdge sphericalInfoEdge = InfoEdge.CreateFromJSON(sphericalEdge.Print());
+        InfoEdge hierarchyInfoEdge = InfoEdge.CreateFromJSON(hierarchyEdge.Print());
+
+        JSONObject sphericalSourcePosition = sphericalPointPositions[sphericalInfoEdge.source];
+        JSONObject sphericalTargetPosition = sphericalPointPositions[sphericalInfoEdge.target];
+        JSONObject hierarchySourcePosition = hierarchyPointPositions[hierarchyInfoEdge.source];
+        JSONObject hierarchyTargetPosition = hierarchyPointPositions[hierarchyInfoEdge.target];
+        Vector3 sphericalStartPosition = new Vector3(x: sphericalSourcePosition["x"].f, y: sphericalSourcePosition["y"].f, z: sphericalSourcePosition["z"].f);
+        Vector3 sphericalEndPosition = new Vector3(x: sphericalTargetPosition["x"].f, y: sphericalTargetPosition["y"].f, z: sphericalTargetPosition["z"].f);
+        Vector3 hierarchyStartPosition = new Vector3(x: hierarchySourcePosition["x"].f, y: hierarchySourcePosition["y"].f, z: hierarchySourcePosition["z"].f);
+        Vector3 hierarchyEndPosition = new Vector3(x: hierarchyTargetPosition["x"].f, y: hierarchyTargetPosition["y"].f, z: hierarchyTargetPosition["z"].f);
+
+        LineRenderer lineRenderer = edgeToInstantiate.GetComponent<LineRenderer>();
+        lineRenderer.SetPosition(0, sphericalStartPosition);
+        lineRenderer.SetPosition(1, sphericalEndPosition);
+
+        GameObject edgeObject = Instantiate(edgeToInstantiate, Vector3.zero, Quaternion.identity);
+        edgeObject.transform.parent = infoGraph.transform;
+
+        edgeObject.GetComponent<Line>().SphericalStartPosition = sphericalStartPosition;
+        edgeObject.GetComponent<Line>().SphericalEndPosition = sphericalEndPosition;
+        edgeObject.GetComponent<Line>().HierarchyStartPosition = hierarchyStartPosition;
+        edgeObject.GetComponent<Line>().HierarchyEndPosition = hierarchyEndPosition;
+    }
 
     void Awake()
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, gameDataFileName);
-        string dataAsString = File.ReadAllText(filePath);
-        JSONObject dataAsJson = new JSONObject(dataAsString);
-        JSONObject nodes = dataAsJson["nodes"];
-        JSONObject edges = dataAsJson["edges"];
+        GetJsonData();
+        JSONObject sphericalNodes = sphericalData["nodes"];
+        JSONObject hierarchyNodes = hierarchyData["nodes"];
+        JSONObject sphericalEdges = sphericalData["edges"];
+        JSONObject hierarchyEdges = hierarchyData["edges"];
+        sphericalPointPositions = new JSONObject(JSONObject.Type.OBJECT);
+        hierarchyPointPositions = new JSONObject(JSONObject.Type.OBJECT);
 
-        pointPositions = new JSONObject(JSONObject.Type.OBJECT);
-
-        foreach (JSONObject node in nodes.list)
+        for (int i = 0; i < sphericalData["nodes"].Count; i++)
         {
-            CreateNode(node);
+            CreatePoint(sphericalNodes[i], hierarchyNodes[i]);
         }
 
-        foreach (JSONObject edge in edges.list)
+        for (int i = 0; i < sphericalEdges.Count; i++)
         {
-            CreateEdge(edge);
-        }
+            CreateLine(sphericalEdges[i], hierarchyEdges[i]);
+        } 
 
         InitialGraph();
     }
 
-    private void CreateNode(JSONObject node)
-    {
-        string nodeToString = node.Print();
-        InfoPoint infoPoint;
-        infoPoint = InfoPoint.CreateFromJSON(nodeToString);
-        GameObject pointObject = Instantiate(pointToInstantiate, infoPoint.position, Quaternion.identity);
-        pointObject.transform.parent = infoGraph.transform;
-        // pointObject.transform.GetChild(0).GetComponent<TextMesh>().text = infoPoint.label;
-        // pointObject.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
-        pointPositions[infoPoint.id] = node["position"];
-        // pointObject.GetComponent<NodeID>().id = infoPoint.id;
-    }
-
-    private void CreateEdge(JSONObject edge)
-    {
-        string edgeToString = edge.Print();
-        InfoEdge infoEdge;
-        infoEdge = InfoEdge.CreateFromJSON(edgeToString);
-
-        JSONObject sourcePosition = pointPositions[infoEdge.source];
-        JSONObject targetPosition = pointPositions[infoEdge.target];
-        Vector3 startPosition = new Vector3(x: sourcePosition["x"].f, y: sourcePosition["y"].f, z: sourcePosition["z"].f);
-        Vector3 endPosition = new Vector3(x: targetPosition["x"].f, y: targetPosition["y"].f, z: targetPosition["z"].f);
-
-        LineRenderer lineRenderer = edgeToInstantiate.GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, startPosition);
-        lineRenderer.SetPosition(1, endPosition);
-
-        GameObject edgeObject = Instantiate(edgeToInstantiate, Vector3.zero, Quaternion.identity);
-        edgeObject.transform.parent = infoGraph.transform;
-    }
 
     private void InitialGraph()
     {
