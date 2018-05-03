@@ -18,7 +18,6 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
     {
         pointRenderer = gameObject.GetComponent<Renderer>();
         pointMaterialInstance = pointRenderer.material;
-        //initialRotation = gameObject.transform.localRotation.eulerAngles;
     }
 
     // 如果 MonoBehaviour 已启用，则在每一帧都调用 Update
@@ -48,11 +47,22 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
     public void OnFocusEnter()
     {
         pointMaterialInstance.color = HighlightColor;
+        foreach (GameObject line in gameObject.GetComponent<Point>().RelatedLines)
+        {
+            line.SetActive(true);
+        }
     }
 
     public void OnFocusExit()
     {
         pointMaterialInstance.color = NormalColor;
+        foreach (GameObject line in gameObject.GetComponent<Point>().RelatedLines)
+        {
+            if (!line.GetComponent<Line>().IsInSameLayer())
+            {
+                line.SetActive(false);
+            }
+        }
     }
 
     public void OnInputClicked(InputClickedEventData eventData)
