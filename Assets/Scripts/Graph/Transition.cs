@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Transition : MonoBehaviour {
     public GameObject WordsManager;
+    public GameObject DataManager;
     public List<GameObject> Points;
     public List<GameObject> Lines;
 
@@ -52,11 +53,11 @@ public class Transition : MonoBehaviour {
     {
         foreach (GameObject line in Lines)
         {
-            line.SetActive(true);
             line.GetComponent<LineRenderer>().SetPosition(0, line.GetComponent<Line>().HierarchyStartPosition);
             line.GetComponent<LineRenderer>().SetPosition(1, line.GetComponent<Line>().HierarchyEndPosition);
             line.transform.localPosition = new Vector3(0, 0, -20);
         }
+        AppearLines();
     }
 
     public void DisappearLines()
@@ -69,7 +70,7 @@ public class Transition : MonoBehaviour {
 
     public void AppearLines()
     {
-        foreach (GameObject line in Lines)
+        foreach (GameObject line in DataManager.GetComponent<DataManager>().linesInSameLayer)
         {
             line.SetActive(true);
         }

@@ -13,6 +13,9 @@ public class DataManager : MonoBehaviour
 
     public List<GameObject> Points;
 
+    public List<GameObject> LinesCrossLayers;
+    public List<GameObject> linesInSameLayer;
+
     [Header("Set Graph Initiation status")]
     [SerializeField]
     public float GraphScale;
@@ -72,6 +75,15 @@ public class DataManager : MonoBehaviour
 
         GameObject edgeObject = Instantiate(edgeToInstantiate, Vector3.zero, Quaternion.identity);
         edgeObject.transform.parent = infoGraph.transform;
+
+        if (hierarchyStartPosition.z != hierarchyEndPosition.z)
+        {
+            LinesCrossLayers.Add(edgeObject);
+        }
+        else
+        {
+            linesInSameLayer.Add(edgeObject);
+        }
 
         edgeObject.GetComponent<Line>().SphericalStartPosition = sphericalStartPosition;
         edgeObject.GetComponent<Line>().SphericalEndPosition = sphericalEndPosition;
