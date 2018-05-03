@@ -46,6 +46,7 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
 
     public void OnFocusEnter()
     {
+        StartRotation();
         pointMaterialInstance.color = HighlightColor;
         foreach (GameObject line in gameObject.GetComponent<Point>().RelatedLines)
         {
@@ -55,6 +56,7 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
 
     public void OnFocusExit()
     {
+        StopRotation();
         pointMaterialInstance.color = NormalColor;
         foreach (GameObject line in gameObject.GetComponent<Point>().RelatedLines)
         {
@@ -76,5 +78,10 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
     public void StartRotation()
     {
         canRotate = true;
+    }
+
+    public void StopRotation()
+    {
+        canRotate = false;
     }
 }
