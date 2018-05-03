@@ -16,12 +16,12 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
         Menu.GetComponent<Menu>().onMenu = false;
         iTween.ScaleTo(Buttons, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
         //iTween.MoveTo(InfoGraph, iTween.Hash("position", Menu.transform.position / 2, "easeType", "easeInOutExpo", "delay", .1));
-        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.01, "y", 0.01, "z", 0.01, "easeType", "easeInOutExpo", "delay", 0.1));
+        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.008, "y", 0.008, "z", 0.008, "easeType", "easeInOutExpo", "delay", 0.1));
         Menu.GetComponent<Tagalong>().enabled = false;
         InfoGraph.GetComponent<TwoHandManipulatable>().enabled = true;
-        ToolBarWrapper.SetActive(true);
-        ToolBar.GetComponent<ToolBarSetting>().GetChildren();
-        ToolBar.GetComponent<ToolBarSetting>().SetToolsPosition();
+        //ToolBarWrapper.SetActive(true);
+        //ToolBar.GetComponent<ToolBarSetting>().GetChildren();
+        //ToolBar.GetComponent<ToolBarSetting>().SetToolsPosition();
         InfoGraph.GetComponent<TapToPlace>().PlaceGameobject();
     }
 }

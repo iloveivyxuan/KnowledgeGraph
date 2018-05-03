@@ -13,7 +13,7 @@ public class AutoRotation : MonoBehaviour {
     void Update () {
         if (isRotating)
         {
-            updateRotation = new Vector3(0.1f, 0.2f, 0.3f);
+            updateRotation = new Vector3(0f, 0f, 0.1f);
             transform.localRotation *= Quaternion.Euler(updateRotation);
         }
 	}

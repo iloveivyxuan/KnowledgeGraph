@@ -161,7 +161,8 @@ namespace HoloToolkit.Unity.SpatialMapping
             else
             {
                 StopPlacing();
-                 SpatialMapping.SetActive(false);
+                SpatialMapping.SetActive(false);
+                gameObject.GetComponent<Transition>().TransformToHierarchy();
             }
         }
         private void StartPlacing()
