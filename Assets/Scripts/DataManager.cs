@@ -85,6 +85,14 @@ public class DataManager : MonoBehaviour
             linesInSameLayer.Add(edgeObject);
         }
 
+        foreach (GameObject point in Points)
+        {
+            if (point.GetComponent<Point>().Id == sphericalInfoEdge.source || point.GetComponent<Point>().Id == sphericalInfoEdge.target)
+            {
+                point.GetComponent<Point>().RelatedLines.Add(edgeObject);
+            }
+        }
+
         edgeObject.GetComponent<Line>().SphericalStartPosition = sphericalStartPosition;
         edgeObject.GetComponent<Line>().SphericalEndPosition = sphericalEndPosition;
         edgeObject.GetComponent<Line>().HierarchyStartPosition = hierarchyStartPosition;
