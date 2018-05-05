@@ -4,18 +4,20 @@ using UnityEngine;
 public class CourseCardsAnimation : MonoBehaviour {
     public GameObject Camera;
     public List<GameObject> Children;
+    private float rotationNumber;
 
     private void Start()
     {
-        getChild();
+        GetChild();
     }
 
-    private void getChild()
+    private void GetChild()
     {
         foreach (Transform child in transform)
         {
             Children.Add(child.gameObject);
         }
+
     }
 
     public void AppearCards()
@@ -25,9 +27,11 @@ public class CourseCardsAnimation : MonoBehaviour {
 
     public void SpreadCards()
     {
+        rotationNumber = 0.03f;
         for (int i = 0; i < Children.Count; i++)
         {
-            iTween.RotateBy(Children[i], iTween.Hash("y", 0.03 * i, "easeType", "easeInOutExpo", "delay", 0.6 + 0.1 * i));
+            iTween.RotateBy(Children[i], iTween.Hash("y", (i + 1) / 2 * rotationNumber, "easeType", "easeInOutExpo", "delay", 0.6 + 0.1 * (i + 1) / 2));
+            rotationNumber *= -1;
         }
     }
 
