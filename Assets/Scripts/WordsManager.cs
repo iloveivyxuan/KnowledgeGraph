@@ -17,6 +17,15 @@ public class WordsManager : MonoBehaviour {
         GraphTransitionHeight = DefaultLayerHeight(Points, defaultLayerType);
     }
 
+    public float GetGraphTransitionHeight(List<string> words)
+    {
+        List<GameObject> points = FindAllPointByLabels(words);
+        List<string> types = GetLayers(points);
+        string defaultLayer = DefaultLayerType(points, types);
+        float defaultLayerHeight = DefaultLayerHeight(points, defaultLayer);
+        return defaultLayerHeight;
+    }
+
     public List<GameObject> FindAllPointByLabels(List<string> words)
     {
         List<GameObject> selectedPoints = new List<GameObject>();
