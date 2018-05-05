@@ -4,16 +4,12 @@ using UnityEngine;
 public class Transition : MonoBehaviour {
     public GameObject WordsManager;
     public GameObject DataManager;
+    public GameObject GraphWrapper;
     public List<GameObject> Points;
     public List<GameObject> Lines;
 
-    private int HeightBetweenLayers;
-    private int Layers;
-
     private void Start()
     {
-        HeightBetweenLayers = 5;
-        Layers = 9;
         GetChildren();
     }
 
@@ -33,29 +29,29 @@ public class Transition : MonoBehaviour {
         }
     }
 
-    public void TransformToHierarchy()
+    public void TransformToHierarchy(float defaultHeight)
     {
         gameObject.GetComponent<AutoRotation>().enabled = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
-        TransformPoints();
+        TransformPoints(defaultHeight);
         TransformGraph();
     }
 
-    public void TransformPoints()
+    public void TransformPoints(float defaultHeight)
     {
         foreach (GameObject point in Points)
         {
-            iTween.MoveTo(point, iTween.Hash("position", point.GetComponent<Point>().HierarchyPosition - new Vector3(0, 0, 20), "islocal", true, "easeType", "easeInOutExpo", "delay", 1, "onstart", "DisappearLines", "onstarttarget", gameObject, "oncomplete", "TransformLines", "oncompletetarget", gameObject));
+            iTween.MoveTo(point, iTween.Hash("position", point.GetComponent<Point>().HierarchyPosition - new Vector3(0, 0, defaultHeight), "islocal", true, "easeType", "easeInOutExpo", "delay", 1, "onstart", "DisappearLines", "onstarttarget", gameObject, "oncomplete", "TransformLines", "oncompletetarget", gameObject, "oncompleteparams", defaultHeight));
         }
     }
 
-    public void TransformLines()
+    public void TransformLines(float defaultHeight)
     {
         foreach (GameObject line in Lines)
         {
             line.GetComponent<LineRenderer>().SetPosition(0, line.GetComponent<Line>().HierarchyStartPosition);
             line.GetComponent<LineRenderer>().SetPosition(1, line.GetComponent<Line>().HierarchyEndPosition);
-            line.transform.localPosition = new Vector3(0, 0, -20);
+            line.transform.localPosition = new Vector3(0, 0, -defaultHeight);
         }
         AppearLines();
     }
@@ -79,6 +75,5 @@ public class Transition : MonoBehaviour {
     public void TransformGraph()
     {
         iTween.ScaleTo(gameObject, iTween.Hash("x", 0.045, "y", 0.045, "z", 0.045, "easeType", "easeInOutExpo", "delay", 1));
-        //iTween.RotateAdd(gameObject, iTween.Hash("x", -20, "easeType", "easeInOutExpo", "delay", 1));
     }
 }
