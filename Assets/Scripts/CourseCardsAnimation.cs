@@ -2,6 +2,7 @@
 using UnityEngine;
 
 public class CourseCardsAnimation : MonoBehaviour {
+    public GameObject CardsWrapper;
     public GameObject Camera;
     public List<GameObject> Children;
     private float rotationNumber;
@@ -22,6 +23,7 @@ public class CourseCardsAnimation : MonoBehaviour {
 
     public void AppearCards()
     {
+        CardsWrapper.transform.rotation = Quaternion.Euler(Camera.transform.rotation.eulerAngles);
         iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "z", 1, "easeType", "easeInOutExpo", "delay", 0.1));
     }
 
