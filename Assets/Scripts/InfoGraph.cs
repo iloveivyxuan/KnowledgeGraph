@@ -3,7 +3,7 @@
 [System.Serializable]
 public class InfoPoint
 {
-    public string label;
+    public Label label;
     public string type;
     public string id;
     public Vector3 position;
@@ -11,6 +11,18 @@ public class InfoPoint
     public static InfoPoint CreateFromJSON(string dataAsJson)
     {
         return JsonUtility.FromJson<InfoPoint>(dataAsJson);
+    }
+}
+
+[System.Serializable]
+public class Label
+{
+    public string en;
+    public string zh;
+
+    public static Label CreateFromJSON(string dataAsJson)
+    {
+        return JsonUtility.FromJson<Label>(dataAsJson);
     }
 }
 
