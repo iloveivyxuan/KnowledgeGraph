@@ -8,14 +8,7 @@ public class MenuCourseButton : MonoBehaviour, IInputClickHandler {
     public void OnInputClicked(InputClickedEventData eventData)
     {
         Menu.GetComponent<Menu>().ChangeSplitStatus();
-        if (!Menu.GetComponent<Menu>().IsOnMenuState)
-        {
-            CourseCards.GetComponent<CourseCardsAnimation>().Appear();
-            CourseCards.GetComponent<CourseCardsAnimation>().Spread();
-        }
-        else
-        {
-            CourseCards.GetComponent<CourseCardsAnimation>().PutTogether();
-        }
+        bool isOnMenu = Menu.GetComponent<Menu>().IsOnMenu;
+        CourseCards.GetComponent<CourseCardsAnimation>().ChangeSpreadStatus(isOnMenu);
     }
 }

@@ -12,22 +12,34 @@ public class CourseCardsAnimation : MonoBehaviour {
         GetChild();
     }
 
+    public void ChangeSpreadStatus(bool isOnMenu)
+    {
+        if (!isOnMenu)
+        {
+            Appear();
+            Spread();
+        }
+        else
+        {
+            PutTogether();
+        }
+    }
+
     private void GetChild()
     {
         foreach (Transform child in transform)
         {
             Children.Add(child.gameObject);
         }
-
     }
 
-    public void AppearCards()
+    private void Appear()
     {
-        CardsWrapper.transform.rotation = Quaternion.Euler(Camera.transform.rotation.eulerAngles);
+        CardsWrapper.transform.rotation = Quaternion.Euler( new Vector3(Camera.transform.rotation.eulerAngles.x, Camera.transform.rotation.eulerAngles.y, 0));
         iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "z", 1, "easeType", "easeInOutExpo", "delay", 0.1));
     }
 
-    public void SpreadCards()
+    private void Spread()
     {
         rotationNumber = 0.03f;
         for (int i = 0; i < Children.Count; i++)
@@ -37,7 +49,7 @@ public class CourseCardsAnimation : MonoBehaviour {
         }
     }
 
-    public void PutTogether()
+    private void PutTogether()
     {
         for (int i = 0; i < Children.Count; i++)
         {

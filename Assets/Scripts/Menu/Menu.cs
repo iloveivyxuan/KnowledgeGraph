@@ -2,34 +2,36 @@
 using UnityEngine;
 
 public class Menu : MonoBehaviour {
-    public bool IsOnMenuState;
+    public bool IsOnMenu;
     public GameObject ButtonsWrapper;
     public GameObject GraphWrapper;
     public GameObject InfoGraph;
 
     private void Start()
     {
-        IsOnMenuState = true;
+        IsOnMenu = true;
     }
 
     public void ChangeSplitStatus()
     {
-        if (IsOnMenuState)
+        if (IsOnMenu)
         {
-            SplitMenu();
-            changeMenuStatus();
+            Split();
+            ChangeTagalongSetting();
+            ChangeStatus();
         }
         else
         {
-            CloseMenu();
-            changeMenuStatus();
+            Close();
+            RestoreTagalongSetting();
+            ChangeStatus();
         }
     }
 
     public void Appear()
     {
-        changeMenuStatus();
-        gameObject.GetComponent<Tagalong>().enabled = true;
+        ChangeStatus();
+        GetComponent<Tagalong>().enabled = true;
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 1, "y", 1, "z", 1, "easeType", "easeInOutExpo", "delay", 0.1));
         iTween.MoveTo(ButtonsWrapper, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
         iTween.MoveTo(InfoGraph, iTween.Hash("position", new Vector3(0, 0.16f, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
@@ -38,28 +40,50 @@ public class Menu : MonoBehaviour {
 
     public void Disappear()
     {
-        changeMenuStatus();
+        ChangeStatus();
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
         iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
-        gameObject.GetComponent<Tagalong>().enabled = false;
+        GetComponent<Tagalong>().enabled = false;
     }
 
-    private void SplitMenu()
+    public void EnlargeInfoGraph()
+    {
+        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.008, "y", 0.008, "z", 0.008, "easeType", "easeInOutExpo", "delay", 0.1));
+    }
+
+    public void DisappearButtons()
+    {
+        iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
+    }
+
+    private void Split()
     {
         iTween.MoveBy(ButtonsWrapper, iTween.Hash("y", -0.25, "easeType", "easeInOutExpo", "delay", .1));
         iTween.RotateBy(ButtonsWrapper, iTween.Hash("x", .15, "easeType", "easeInOutBack", "delay", .1));
         iTween.MoveBy(GraphWrapper, iTween.Hash("y", 0.25, "easeType", "easeInOutExpo", "delay", .1));
     }
 
-    private void CloseMenu()
+    private void Close()
     {
         iTween.MoveBy(ButtonsWrapper, iTween.Hash("y", 0.25, "easeType", "easeInOutExpo", "delay", .1));
         iTween.RotateBy(ButtonsWrapper, iTween.Hash("x", -0.15, "easeType", "easeInOutBack", "delay", .1));
         iTween.MoveBy(GraphWrapper, iTween.Hash("y", -0.25, "easeType", "easeInOutExpo", "delay", .1));
     }
 
-    private void changeMenuStatus()
+    private void ChangeStatus()
     {
-        IsOnMenuState = !IsOnMenuState;
+        IsOnMenu = !IsOnMenu;
+    }
+
+    private void ChangeTagalongSetting()
+    {
+        GetComponent<Tagalong>().MinimumHorizontalOverlap = 0.95f;
+        GetComponent<Tagalong>().MinimumVerticalOverlap = 0.05f;
+    }
+
+    private void RestoreTagalongSetting()
+    {
+        GetComponent<Tagalong>().MinimumHorizontalOverlap = 0.63f;
+        GetComponent<Tagalong>().MinimumVerticalOverlap = 0.6f;
     }
 }
