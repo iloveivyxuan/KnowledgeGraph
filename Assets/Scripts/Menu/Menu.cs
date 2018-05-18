@@ -2,35 +2,27 @@
 using UnityEngine;
 
 public class Menu : MonoBehaviour {
-    public bool IsOnMenu;
     public GameObject ButtonsWrapper;
     public GameObject GraphWrapper;
     public GameObject InfoGraph;
+    private StatusManager statusManager;
 
-    private void Start()
+    public void Change(StatusManager.Status statusFrom, StatusManager.Status statusTo)
     {
-        IsOnMenu = true;
-    }
-
-    public void ChangeSplitStatus()
-    {
-        if (IsOnMenu)
+        if (statusFrom == StatusManager.Status.Menu && statusTo == StatusManager.Status.CourseIndex)
         {
             Split();
             ChangeTagalongSetting();
-            ChangeStatus();
         }
-        else
+        else if (statusFrom == StatusManager.Status.CourseIndex && statusTo == StatusManager.Status.Menu)
         {
             Close();
             RestoreTagalongSetting();
-            ChangeStatus();
         }
     }
 
     public void Appear()
     {
-        ChangeStatus();
         GetComponent<Tagalong>().enabled = true;
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 1, "y", 1, "z", 1, "easeType", "easeInOutExpo", "delay", 0.1));
         iTween.MoveTo(ButtonsWrapper, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
@@ -40,7 +32,6 @@ public class Menu : MonoBehaviour {
 
     public void Disappear()
     {
-        ChangeStatus();
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
         iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
         GetComponent<Tagalong>().enabled = false;
@@ -68,11 +59,6 @@ public class Menu : MonoBehaviour {
         iTween.MoveBy(ButtonsWrapper, iTween.Hash("y", 0.25, "easeType", "easeInOutExpo", "delay", .1));
         iTween.RotateBy(ButtonsWrapper, iTween.Hash("x", -0.15, "easeType", "easeInOutBack", "delay", .1));
         iTween.MoveBy(GraphWrapper, iTween.Hash("y", -0.25, "easeType", "easeInOutExpo", "delay", .1));
-    }
-
-    private void ChangeStatus()
-    {
-        IsOnMenu = !IsOnMenu;
     }
 
     private void ChangeTagalongSetting()
