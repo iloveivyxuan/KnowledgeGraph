@@ -4,6 +4,7 @@ using UnityEngine;
 public class Menu : MonoBehaviour {
     public GameObject ButtonsWrapper;
     public GameObject GraphWrapper;
+    public GameObject BackgroundWrapper;
     public GameObject InfoGraph;
     private StatusManager statusManager;
 
@@ -33,7 +34,7 @@ public class Menu : MonoBehaviour {
     public void Disappear()
     {
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
-        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
+        iTween.ScaleTo(GraphWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
         GetComponent<Tagalong>().enabled = false;
     }
 
@@ -42,9 +43,11 @@ public class Menu : MonoBehaviour {
         iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.008, "y", 0.008, "z", 0.008, "easeType", "easeInOutExpo", "delay", 0.1));
     }
 
-    public void DisappearButtons()
+    public void DisappearWithoutInfoGraph()
     {
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
+        iTween.ScaleTo(BackgroundWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
+        GetComponent<Tagalong>().enabled = false;
     }
 
     private void Split()

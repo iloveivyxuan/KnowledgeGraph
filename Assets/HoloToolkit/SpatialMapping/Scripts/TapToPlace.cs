@@ -48,6 +48,8 @@ namespace HoloToolkit.Unity.SpatialMapping
         public GameObject SpatialMapping;
 
         public GameObject WordsManager;
+        public GameObject ToolBarWrapper;
+        public GameObject ToolBar;
 
         private Interpolator interpolator;
 
@@ -148,7 +150,7 @@ namespace HoloToolkit.Unity.SpatialMapping
 
         public virtual void OnInputClicked(InputClickedEventData eventData)
         {
-            SpatialMapping.SetActive(true);
+            //SpatialMapping.SetActive(true);
             IsBeingPlaced = !IsBeingPlaced;
             HandlePlacement();
             eventData.Use();
@@ -165,6 +167,9 @@ namespace HoloToolkit.Unity.SpatialMapping
                 StopPlacing();
                 SpatialMapping.SetActive(false);
                 gameObject.GetComponent<Transition>().TransformToHierarchy(WordsManager.GetComponent<WordsManager>().GraphTransitionHeight);
+                ToolBarWrapper.SetActive(true);
+                ToolBar.GetComponent<ToolBarSetting>().GetChildren();
+                ToolBar.GetComponent<ToolBarSetting>().SetToolsPosition();
             }
         }
         private void StartPlacing()
