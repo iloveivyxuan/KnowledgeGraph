@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class DataManager : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class DataManager : MonoBehaviour
         GameObject pointObject = Instantiate(pointToInstantiate, sphericalInfoPoint.position, Quaternion.identity);
         Points.Add(pointObject);
         pointObject.transform.parent = infoGraph.transform;
+        pointObject.transform.localRotation = Quaternion.Euler(new Vector3(90, 0, 0));
+        pointObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = sphericalInfoPoint.label; // Add label to poitn text
 
         pointObject.GetComponent<Point>().Id = sphericalInfoPoint.id;
         pointObject.GetComponent<Point>().Label = sphericalInfoPoint.label;

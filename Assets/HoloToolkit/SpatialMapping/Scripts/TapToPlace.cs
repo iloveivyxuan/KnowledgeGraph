@@ -170,6 +170,7 @@ namespace HoloToolkit.Unity.SpatialMapping
                 ToolBarWrapper.SetActive(true);
                 ToolBar.GetComponent<ToolBarSetting>().GetChildren();
                 ToolBar.GetComponent<ToolBarSetting>().SetToolsPosition();
+                GetComponent<GraphInformation>().AppearlabelToPoints();
                 GetComponent<TapToPlace>().enabled = false;
             }
         }
