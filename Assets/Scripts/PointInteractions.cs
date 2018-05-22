@@ -1,7 +1,7 @@
 ﻿using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
-public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
+public class PointInteractions : MonoBehaviour, IFocusable {
 
     public Color NormalColor;
     public Color HighlightColor;
@@ -10,13 +10,14 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
     private bool canRotate;
     //private Vector3 initialRotation;
     private Vector3 updateRotation;
-
-
-    #region Unity APIs
+    private GameObject point;
+    private GameObject label;
 
     private void Awake()
     {
-        pointRenderer = gameObject.GetComponent<Renderer>();
+        point = transform.GetChild(0).gameObject;
+        label = transform.GetChild(1).gameObject;
+        pointRenderer = point.GetComponent<Renderer>();
         pointMaterialInstance = pointRenderer.material;
     }
 
@@ -29,7 +30,7 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
             updateRotation.x = 1;
             updateRotation.y = 2;
             updateRotation.z = 3;
-            transform.localRotation *= Quaternion.Euler(updateRotation);
+            point.transform.localRotation *= Quaternion.Euler(updateRotation);
         }
     }
 
@@ -38,11 +39,6 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
     {
         Destroy(pointMaterialInstance);
     }
-
-    #endregion
-
-
-    #region InputImplementation
 
     public void OnFocusEnter()
     {
@@ -71,9 +67,6 @@ public class PointInteractions : MonoBehaviour, IFocusable, IInputClickHandler {
     {
         StartRotation();
     }
-
-    #endregion
-
 
     public void StartRotation()
     {
