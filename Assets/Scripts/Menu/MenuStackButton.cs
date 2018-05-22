@@ -8,8 +8,7 @@ public class MenuStackButton : MonoBehaviour, IInputClickHandler {
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        //KeywordsWrapper.GetComponent<KeywordsWrapper>().Appear();
-        KeywordsWrapper.SetActive(true);
+        KeywordsWrapper.GetComponent<KeywordsWrapper>().Appear();
         Menu.GetComponent<Menu>().Disappear();
     }
 }
