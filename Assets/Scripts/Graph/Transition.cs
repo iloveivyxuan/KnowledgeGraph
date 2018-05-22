@@ -11,12 +11,12 @@ public class Transition : MonoBehaviour {
         gameObject.GetComponent<AutoRotation>().isRotating = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
         TransformPoints(defaultHeight);
-        EnlargeTo(0.045f);
+        ScaleTo(0.045f);
     }
 
     public void TransformToSpherical()
     {
-        gameObject.GetComponent<AutoRotation>().enabled = true;
+        gameObject.GetComponent<AutoRotation>().isRotating = true;
         gameObject.GetComponent<SphereCollider>().enabled = true;
 
         foreach (GameObject point in GetComponent<GraphInformation>().Points)
@@ -30,6 +30,8 @@ public class Transition : MonoBehaviour {
                 line.SetActive(true);
             }
         }
+        ScaleTo(0.006f);
+        transform.localPosition = new Vector3(0, 0.15f, 0);
     }
 
     private void TransformPoints(float defaultHeight)
@@ -68,7 +70,7 @@ public class Transition : MonoBehaviour {
         }
     }
 
-    public void EnlargeTo(float number)
+    public void ScaleTo(float number)
     {
         iTween.ScaleTo(gameObject, iTween.Hash("x", number, "y", number, "z", number, "easeType", "easeInOutExpo", "delay", 0));
     }
