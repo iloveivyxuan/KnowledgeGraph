@@ -150,7 +150,7 @@ namespace HoloToolkit.Unity.SpatialMapping
 
         public virtual void OnInputClicked(InputClickedEventData eventData)
         {
-            //SpatialMapping.SetActive(true);
+            SpatialMapping.SetActive(true);
             IsBeingPlaced = !IsBeingPlaced;
             HandlePlacement();
             eventData.Use();
@@ -170,6 +170,7 @@ namespace HoloToolkit.Unity.SpatialMapping
                 ToolBarWrapper.SetActive(true);
                 ToolBar.GetComponent<ToolBarSetting>().GetChildren();
                 ToolBar.GetComponent<ToolBarSetting>().SetToolsPosition();
+                GetComponent<TapToPlace>().enabled = false;
             }
         }
         private void StartPlacing()

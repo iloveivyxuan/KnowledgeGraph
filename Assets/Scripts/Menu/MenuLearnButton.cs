@@ -11,9 +11,9 @@ public class MenuLearnButton : MonoBehaviour, IInputClickHandler {
     public void OnInputClicked(InputClickedEventData eventData)
     {
         Menu.GetComponent<Menu>().DisappearWithoutInfoGraph();
-        Menu.GetComponent<Menu>().EnlargeInfoGraph();
+        InfoGraph.GetComponent<Transition>().EnlargeTo(0.008f);
+        InfoGraph.GetComponent<Transition>().MoveToCenter();
         InfoGraph.GetComponent<TapToPlace>().enabled = true;
-        InfoGraph.GetComponent<TapToPlace>().PlaceGameobject();
-        Menu.GetComponent<Menu>().EnlargeInfoGraph();
+        //InfoGraph.GetComponent<TapToPlace>().PlaceGameobject();  这里有问题，不知道为什么无法获得point的focus事件
     }
 }

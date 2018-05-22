@@ -1,70 +1,66 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Transition : MonoBehaviour {
     public GameObject WordsManager;
     public GameObject DataManager;
     public GameObject GraphWrapper;
-    public List<GameObject> Points;
-    public List<GameObject> Lines;
-
-    private void Start()
-    {
-        GetChildren();
-    }
-
-    public void GetChildren()
-    {
-        Points = new List<GameObject>();
-        foreach (Transform child in transform)
-        {
-            if (child.gameObject.GetComponent<Point>())
-            {
-                Points.Add(child.gameObject);
-            }
-            if (child.gameObject.GetComponent<Line>())
-            {
-                Lines.Add(child.gameObject);
-            }
-        }
-    }
+    public GameObject Menu;
 
     public void TransformToHierarchy(float defaultHeight)
     {
         gameObject.GetComponent<AutoRotation>().enabled = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
         TransformPoints(defaultHeight);
-        TransformGraph();
+        EnlargeTo(0.045f);
     }
 
-    public void TransformPoints(float defaultHeight)
+    public void TransformToSpherical()
     {
-        foreach (GameObject point in Points)
+        gameObject.GetComponent<AutoRotation>().enabled = true;
+        gameObject.GetComponent<SphereCollider>().enabled = true;
+
+        foreach (GameObject point in GetComponent<GraphInformation>().Points)
+        {
+            iTween.MoveTo(point, iTween.Hash("position", point.GetComponent<Point>().SphericalPosition, "islocal", true, "easeType", "easeInOutExpo", "delay", 1));
+            foreach (GameObject line in GetComponent<GraphInformation>().Lines)
+            {
+                line.GetComponent<LineRenderer>().SetPosition(0, line.GetComponent<Line>().SphericalStartPosition);
+                line.GetComponent<LineRenderer>().SetPosition(1, line.GetComponent<Line>().SphericalEndPosition);
+                line.transform.localPosition = new Vector3(0, 0, 0);
+                line.SetActive(true);
+            }
+        }
+    }
+
+    private void TransformPoints(float defaultHeight)
+    {
+        foreach (GameObject point in GetComponent<GraphInformation>().Points)
         {
             iTween.MoveTo(point, iTween.Hash("position", point.GetComponent<Point>().HierarchyPosition - new Vector3(0, 0, defaultHeight), "islocal", true, "easeType", "easeInOutExpo", "delay", 1, "onstart", "DisappearLines", "onstarttarget", gameObject, "oncomplete", "TransformLines", "oncompletetarget", gameObject, "oncompleteparams", defaultHeight));
         }
     }
 
-    public void TransformLines(float defaultHeight)
+    private void TransformLines(float defaultHeight)
     {
-        foreach (GameObject line in Lines)
+        foreach (GameObject line in GetComponent<GraphInformation>().Lines)
         {
             line.GetComponent<LineRenderer>().SetPosition(0, line.GetComponent<Line>().HierarchyStartPosition);
             line.GetComponent<LineRenderer>().SetPosition(1, line.GetComponent<Line>().HierarchyEndPosition);
+            line.transform.localScale = new Vector3(1, 1, 1);
             line.transform.localPosition = new Vector3(0, 0, -defaultHeight);
         }
         AppearLines();
     }
 
-    public void DisappearLines()
+    private void DisappearLines()
     {
-        foreach (GameObject line in Lines)
+        foreach (GameObject line in GetComponent<GraphInformation>().Lines)
         {
             line.SetActive(false);
         }
     }
 
-    public void AppearLines()
+    private void AppearLines()
     {
         foreach (GameObject line in DataManager.GetComponent<DataManager>().linesInSameLayer)
         {
@@ -72,8 +68,13 @@ public class Transition : MonoBehaviour {
         }
     }
 
-    public void TransformGraph()
+    public void EnlargeTo(float number)
     {
-        iTween.ScaleTo(gameObject, iTween.Hash("x", 0.045, "y", 0.045, "z", 0.045, "easeType", "easeInOutExpo", "delay", 1));
+        iTween.ScaleTo(gameObject, iTween.Hash("x", number, "y", number, "z", number, "easeType", "easeInOutExpo", "delay", 0));
+    }
+
+    public void MoveToCenter()
+    {
+        iTween.MoveTo(gameObject, iTween.Hash("x", Menu.transform.position.x / 1.5f, "y", Menu.transform.position.y / 1.5f, "z", Menu.transform.position.z / 1.5f));
     }
 }

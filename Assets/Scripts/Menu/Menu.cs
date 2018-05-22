@@ -36,11 +36,6 @@ public class Menu : MonoBehaviour {
         GetComponent<Tagalong>().enabled = false;
     }
 
-    public void EnlargeInfoGraph()
-    {
-        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.008, "y", 0.008, "z", 0.008, "easeType", "easeInOutExpo", "delay", 0.1));
-    }
-
     public void DisappearWithoutInfoGraph()
     {
         iTween.ScaleTo(ButtonsWrapper, iTween.Hash("x", 0, "y", 0, "z", 0, "easeType", "easeInOutExpo", "delay", 0.1));
