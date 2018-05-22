@@ -8,7 +8,7 @@ public class Transition : MonoBehaviour {
 
     public void TransformToHierarchy(float defaultHeight)
     {
-        gameObject.GetComponent<AutoRotation>().enabled = false;
+        gameObject.GetComponent<AutoRotation>().isRotating = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
         TransformPoints(defaultHeight);
         EnlargeTo(0.045f);
