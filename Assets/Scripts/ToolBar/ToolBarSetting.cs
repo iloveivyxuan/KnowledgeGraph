@@ -23,7 +23,7 @@ public class ToolBarSetting : MonoBehaviour {
         {
             if (Children[i].activeSelf)
             {
-                Children[i].transform.localPosition = new Vector3(0.0802f * i - Children.Count * 0.0802f / 2f, 0, 0);
+                Children[i].transform.localPosition = new Vector3(0.0802f * i - (Children.Count - 1) * 0.0802f / 2f, -0.1f, 0);
             }
         }
     }
