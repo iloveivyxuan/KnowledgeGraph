@@ -15,5 +15,6 @@ public class MenuButton : MonoBehaviour, IInputClickHandler {
         InfoGraph.GetComponent<Transition>().TransformToSpherical();
         InfoGraph.GetComponent<GraphInformation>().DisappearLabelToPoints();
         KeywordsWrapper.SetActive(true);
+        InfoGraph.GetComponent<GraphInteractions>().DestroyLayers();
     }
 }
