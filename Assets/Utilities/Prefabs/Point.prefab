@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 223345846824736796}
   - component: {fileID: 114707437298175416}
   - component: {fileID: 114090840264089678}
+  - component: {fileID: 114935103517596186}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -300,6 +301,19 @@ MonoBehaviour:
   SphericalPosition: {x: 0, y: 0, z: 0}
   HierarchyPosition: {x: 0, y: 0, z: 0}
   RelatedLines: []
+--- !u!114 &114935103517596186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297807379918474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotAxis: 0
+  TargetTransform: {fileID: 0}
 --- !u!135 &135233579583339260
 SphereCollider:
   m_ObjectHideFlags: 1
