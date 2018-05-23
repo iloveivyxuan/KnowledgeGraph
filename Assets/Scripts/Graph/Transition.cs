@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
-public class Transition : MonoBehaviour {
+public class Transition : MonoBehaviour
+{
     public GameObject WordsManager;
     public GameObject DataManager;
     public GameObject GraphWrapper;
     public GameObject Menu;
+    public GameObject LayerToInstantiate;
 
     public void TransformToHierarchy(float defaultHeight)
     {
@@ -12,6 +14,8 @@ public class Transition : MonoBehaviour {
         gameObject.GetComponent<SphereCollider>().enabled = false;
         TransformPoints(defaultHeight);
         ScaleTo(0.045f);
+        AppearLayers(defaultHeight);
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     public void TransformToSpherical()
@@ -78,5 +82,17 @@ public class Transition : MonoBehaviour {
     public void MoveToCenter()
     {
         iTween.MoveTo(gameObject, iTween.Hash("x", Menu.transform.position.x / 1.5f, "y", Menu.transform.position.y / 1.5f, "z", Menu.transform.position.z / 1.5f));
+    }
+
+    private void AppearLayers(float defaultHeight)
+    {
+        GameObject layerTop = Instantiate(LayerToInstantiate, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject layerBottom = Instantiate(LayerToInstantiate, new Vector3(0, 0, 0), Quaternion.identity);
+        layerTop.transform.parent = transform;
+        layerBottom.transform.parent = transform;
+        layerTop.transform.localPosition = new Vector3(0, 0, defaultHeight + 9f);
+        layerBottom.transform.localPosition = new Vector3(0, 0, defaultHeight - 9f);
+        layerTop.transform.localScale = new Vector3(50, 0, 50);
+        layerBottom.transform.localScale = new Vector3(50, 0, 50);
     }
 }
