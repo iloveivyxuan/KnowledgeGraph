@@ -1,6 +1,4 @@
 ﻿using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity.InputModule.Utilities.Interactions;
-using HoloToolkit.Unity;
 using UnityEngine;
 
 public class MenuButton : MonoBehaviour, IInputClickHandler {
@@ -8,16 +6,14 @@ public class MenuButton : MonoBehaviour, IInputClickHandler {
     public GameObject Buttons;
     public GameObject ToolBarWrapper;
     public GameObject InfoGraph;
+    public GameObject KeywordsWrapper;
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        Menu.GetComponent<Tagalong>().enabled = true;
-        Menu.GetComponent<Menu>().onMenu = true;
-        iTween.ScaleTo(Buttons, iTween.Hash("x", 1, "y", 1, "z", 1, "easeType", "easeInOutExpo", "delay", 0.1));
-        iTween.MoveTo(Buttons, iTween.Hash("position", new Vector3(0, 0, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
+        Menu.GetComponent<Menu>().AppearWithoutInfoGraph();
         ToolBarWrapper.SetActive(false);
-        iTween.MoveTo(InfoGraph, iTween.Hash("position", new Vector3(0, 0.16f, 0), "islocal", true, "easeType", "easeInOutExpo", "delay", .2));
-        iTween.ScaleTo(InfoGraph, iTween.Hash("x", 0.005, "y", 0.005, "z", 0.005, "easeType", "easeInOutExpo", "delay", 0.2));
-        InfoGraph.GetComponent<TwoHandManipulatable>().enabled = false;
+        InfoGraph.GetComponent<Transition>().TransformToSpherical();
+        InfoGraph.GetComponent<GraphInformation>().DisappearLabelToPoints();
+        KeywordsWrapper.SetActive(true);
     }
 }
